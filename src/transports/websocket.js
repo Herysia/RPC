@@ -18,8 +18,7 @@ class WebSocketTransport extends EventEmitter {
     }
 
     async connect() {
-        const port = 6473 + (this.tries % 10);
-        this.tries += 1;
+        const port = 6473;
 
         this.ws = new WebSocket(
             `ws://127.0.0.1:${port}/?v=1&client_id=${this.client.clientId}`,
@@ -36,9 +35,6 @@ class WebSocketTransport extends EventEmitter {
     }
 
     onClose(event) {
-        if (!event.wasClean) {
-            return;
-        }
         this.emit("close", event);
     }
 
