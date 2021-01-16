@@ -19,6 +19,7 @@ class WebSocketTransport extends EventEmitter {
 
     async connect() {
         const port = 6473;
+        this.tries++;
 
         this.ws = new WebSocket(
             `ws://127.0.0.1:${port}/?v=1&client_id=${this.client.clientId}`,
@@ -43,7 +44,7 @@ class WebSocketTransport extends EventEmitter {
             this.ws.close();
         } catch {} // eslint-disable-line no-empty
 
-        if (this.tries > 20) {
+        if (this.tries > 5) {
             this.emit("error", event.error);
         } else {
             setTimeout(() => {
